@@ -33,14 +33,13 @@ public struct KobeEngineer
         
         let postData: NSData = "msg=\(self.message!)".dataUsingEncoding(NSUTF8StringEncoding)!
         
-        let URLRequest: NSMutableURLRequest = NSMutableURLRequest(URL: kobeURL)
+        let URLRequest: NSMutableURLRequest = NSMutableURLRequest(URL: self.kobeURL)
         URLRequest.HTTPMethod = "POST"
         URLRequest.HTTPBody = postData
         
         func postResponse(data: NSData?, response: NSURLResponse?, error: NSError?)
         {
             if let error = error {
-                print("Got error: \(error.localizedDescription)")
                 
                 _completionHandler(nil, error)
                 
@@ -49,9 +48,6 @@ public struct KobeEngineer
             
             if let data = data {
                 let responseString: String = String(data: data, encoding: NSUTF8StringEncoding)!
-                
-                print("Response: \(responseString)")
-                
                 let searchString: String = "https://engineer.kobe.ga/"
                 let range: Range<String.Index> = responseString.rangeOfString(searchString)!
                 let length: Int = searchString.startIndex.distanceTo(searchString.endIndex)
